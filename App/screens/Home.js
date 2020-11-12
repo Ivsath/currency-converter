@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   View,
   StyleSheet,
@@ -7,12 +7,12 @@ import {
   Dimensions,
   Text,
   ScrollView,
-  Keyboard,
 } from 'react-native'
 import { format } from 'date-fns'
 
 import { ConversionInput } from '../components/ConversionInput'
 import { Button } from '../components/Button'
+import { KeyboardSpacer } from '../components/KeyboardSpacer'
 import colors from '../constants/colors'
 
 const screen = Dimensions.get('window')
@@ -54,21 +54,6 @@ const styles = StyleSheet.create({
 
 const Home = () => {
   const [scrollEnabled, setScrollEnabled] = useState('false')
-
-  useEffect(() => {
-    const showListener = Keyboard.addListener('keyboardDidShow', () => {
-      setScrollEnabled(true)
-    })
-
-    const hideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setScrollEnabled(false)
-    })
-
-    return () => {
-      showListener.remove()
-      hideListener.remove()
-    }
-  }, [])
 
   const baseCurrency = 'USD'
   const quoteCurrency = 'GBP'
@@ -115,7 +100,11 @@ const Home = () => {
             )}`}
           </Text>
           <Button text="Reverse Currencies" onPress={() => alert('todo!')} />
-          <View style={{ height: screen.height * 0.5 }} />
+          <KeyboardSpacer
+            onToggle={(keyboardIsVisible) =>
+              setScrollEnabled(keyboardIsVisible)
+            }
+          />
         </View>
       </ScrollView>
     </View>
