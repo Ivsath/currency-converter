@@ -18,20 +18,20 @@ const Options = () => {
           text="Themes"
           onPress={() => alert('todo!')}
           rightIcon={
-            <Entypo name="chevron-right" size="20" color={colors.blue} />
+            <Entypo name="chevron-right" size={20} color={colors.blue} />
           }
         />
         <RowSeparator />
         <RowItem
           text="React Native"
           onPress={() => openUrl('https://reactnative.dev/')}
-          rightIcon={<Entypo name="export" size="20" color={colors.blue} />}
+          rightIcon={<Entypo name="export" size={20} color={colors.blue} />}
         />
         <RowSeparator />
         <RowItem
           text="Flutter"
           onPress={() => openUrl('https://flutter.dev/')}
-          rightIcon={<Entypo name="export" size="20" color={colors.blue} />}
+          rightIcon={<Entypo name="export" size={20} color={colors.blue} />}
         />
       </ScrollView>
     </SafeAreaView>
