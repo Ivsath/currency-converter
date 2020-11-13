@@ -93,14 +93,14 @@ const Home = ({ navigation }) => {
           <ConversionInput
             text={baseCurrency}
             value="123"
-            onButtonPress={() => alert('todo!')}
+            onButtonPress={() => navigation.push('CurrencyList')}
             onChange={(text) => console.log('text', text)}
             keyboardType="numeric"
           />
           <ConversionInput
             text={quoteCurrency}
             value="123"
-            onButtonPress={() => alert('todo!')}
+            onButtonPress={() => navigation.push('CurrencyList')}
             onChange={(text) => console.log('text', text)}
             keyboardType="numeric"
             editable={false}
