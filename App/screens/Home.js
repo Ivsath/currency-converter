@@ -94,7 +94,10 @@ const Home = ({ navigation }) => {
             text={baseCurrency}
             value="123"
             onButtonPress={() =>
-              navigation.push('CurrencyList', { title: 'Base Currency' })
+              navigation.push('CurrencyList', {
+                title: 'Base Currency',
+                activeCurrency: baseCurrency,
+              })
             }
             onChange={(text) => console.log('text', text)}
             keyboardType="numeric"
@@ -103,7 +106,10 @@ const Home = ({ navigation }) => {
             text={quoteCurrency}
             value="123"
             onButtonPress={() =>
-              navigation.push('CurrencyList', { title: 'Quote Currency' })
+              navigation.push('CurrencyList', {
+                title: 'Quote Currency',
+                activeCurrency: quoteCurrency,
+              })
             }
             onChange={(text) => console.log('text', text)}
             keyboardType="numeric"
