@@ -7,7 +7,6 @@ import { Entypo } from '@expo/vector-icons'
 import Home from '../screens/Home'
 import Options from '../screens/Options'
 import CurrencyList from '../screens/CurrencyList'
-import { ConversionProvider } from '../utils/ConversionContext'
 import colors from '../constants/colors'
 
 const MainStack = createStackNavigator()
@@ -55,8 +54,6 @@ const ModalStackScreen = () => (
 
 export default () => (
   <NavigationContainer>
-    <ConversionProvider>
-      <ModalStackScreen />
-    </ConversionProvider>
+    <ModalStackScreen />
   </NavigationContainer>
 )
