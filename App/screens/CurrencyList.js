@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Entypo } from '@expo/vector-icons'
 
 import { RowItem, RowSeparator } from '../components/RowItem'
+import { useConversionActions } from '../utils/ConversionContext'
 import colors from '../constants/colors'
 import currencies from '../data/currencies.json'
 
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
 })
 
 const CurrencyList = ({ navigation, route = {} }) => {
+  const { setBaseCurrency, setQuoteCurrency } = useConversionActions()
   const insets = useSafeAreaInsets()
   const params = route.params || {}
 
@@ -33,7 +35,11 @@ const CurrencyList = ({ navigation, route = {} }) => {
             <RowItem
               text={item}
               onPress={() => {
-                if (params.onChange) params.onChange(item)
+                if (params.isBaseCurrency) {
+                  setBaseCurrency(item)
+                } else {
+                  setQuoteCurrency(item)
+                }
                 navigation.pop()
               }}
               rightIcon={

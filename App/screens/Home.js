@@ -16,6 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ConversionInput } from '../components/ConversionInput'
 import { Button } from '../components/Button'
 import { KeyboardSpacer } from '../components/KeyboardSpacer'
+import { useConversion, useConversionActions } from '../utils/ConversionContext'
 import colors from '../constants/colors'
 
 const screen = Dimensions.get('window')
@@ -60,18 +61,13 @@ const styles = StyleSheet.create({
 })
 
 const Home = ({ navigation }) => {
+  const { baseCurrency, quoteCurrency } = useConversion()
+  const { swapCurrencies } = useConversionActions()
   const [scrollEnabled, setScrollEnabled] = useState('false')
-  const [baseCurrency, setBaseCurrency] = useState('USD')
-  const [quoteCurrency, setQuoteCurrency] = useState('GBP')
   const [value, setValue] = useState('100')
 
   const conversionRate = 0.8345
   const date = new Date()
-
-  const swapCurrencies = () => {
-    setBaseCurrency(quoteCurrency)
-    setQuoteCurrency(baseCurrency)
-  }
 
   return (
     <View style={styles.container}>
@@ -103,7 +99,7 @@ const Home = ({ navigation }) => {
               navigation.push('CurrencyList', {
                 title: 'Base Currency',
                 activeCurrency: baseCurrency,
-                onChange: (currency) => setBaseCurrency(currency),
+                isBaseCurrency: true,
               })
             }
             onChangeText={(text) => setValue(text)}
@@ -118,7 +114,7 @@ const Home = ({ navigation }) => {
               navigation.push('CurrencyList', {
                 title: 'Quote Currency',
                 activeCurrency: quoteCurrency,
-                onChange: (currency) => setBaseCurrency(currency),
+                isBaseCurrency: false,
               })
             }
             keyboardType="numeric"
