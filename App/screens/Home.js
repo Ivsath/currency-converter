@@ -61,11 +61,17 @@ const styles = StyleSheet.create({
 
 const Home = ({ navigation }) => {
   const [scrollEnabled, setScrollEnabled] = useState('false')
+  const [baseCurrency, setBaseCurrency] = useState('USD')
+  const [quoteCurrency, setQuoteCurrency] = useState('GBP')
+  const [value, setValue] = useState('100')
 
-  const baseCurrency = 'USD'
-  const quoteCurrency = 'GBP'
   const conversionRate = 0.8345
   const date = new Date()
+
+  const swapCurrencies = () => {
+    setBaseCurrency(quoteCurrency)
+    setQuoteCurrency(baseCurrency)
+  }
 
   return (
     <View style={styles.container}>
@@ -92,26 +98,27 @@ const Home = ({ navigation }) => {
           <Text style={styles.textHeader}>Currency Converter</Text>
           <ConversionInput
             text={baseCurrency}
-            value="123"
+            value={value}
             onButtonPress={() =>
               navigation.push('CurrencyList', {
                 title: 'Base Currency',
                 activeCurrency: baseCurrency,
               })
             }
-            onChange={(text) => console.log('text', text)}
+            onChangeText={(text) => setValue(text)}
             keyboardType="numeric"
           />
           <ConversionInput
             text={quoteCurrency}
-            value="123"
+            value={
+              value && `${(parseFloat(value) * conversionRate).toFixed(2)}`
+            }
             onButtonPress={() =>
               navigation.push('CurrencyList', {
                 title: 'Quote Currency',
                 activeCurrency: quoteCurrency,
               })
             }
-            onChange={(text) => console.log('text', text)}
             keyboardType="numeric"
             editable={false}
           />
@@ -121,7 +128,7 @@ const Home = ({ navigation }) => {
               'MMMM dd, yyyy',
             )}`}
           </Text>
-          <Button text="Reverse Currencies" onPress={() => alert('todo!')} />
+          <Button text="Reverse Currencies" onPress={() => swapCurrencies()} />
           <KeyboardSpacer
             onToggle={(keyboardIsVisible) =>
               setScrollEnabled(keyboardIsVisible)
