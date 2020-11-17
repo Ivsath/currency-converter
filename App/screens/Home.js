@@ -61,13 +61,12 @@ const styles = StyleSheet.create({
 })
 
 const Home = ({ navigation }) => {
-  const { baseCurrency, quoteCurrency } = useConversion()
-  const { swapCurrencies } = useConversionActions()
   const [scrollEnabled, setScrollEnabled] = useState('false')
   const [value, setValue] = useState('100')
+  const { baseCurrency, quoteCurrency, date, rates } = useConversion()
+  const { swapCurrencies } = useConversionActions()
 
-  const conversionRate = 0.8345
-  const date = new Date()
+  const conversionRate = rates[quoteCurrency]
 
   return (
     <View style={styles.container}>
@@ -121,10 +120,9 @@ const Home = ({ navigation }) => {
             editable={false}
           />
           <Text style={styles.text}>
-            {`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${format(
-              date,
-              'MMMM dd, yyyy',
-            )}`}
+            {`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${
+              date && format(new Date(date), 'MMMM dd, yyyy')
+            }`}
           </Text>
           <Button text="Reverse Currencies" onPress={() => swapCurrencies()} />
           <KeyboardSpacer
