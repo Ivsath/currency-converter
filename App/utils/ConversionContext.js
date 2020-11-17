@@ -13,8 +13,10 @@ export const ConversionProvider = ({ children }) => {
   const [quoteCurrency, setQuoteCurrency] = useState(DEFAULT_QUOTE_CURRENCY)
   const [date, setDate] = useState()
   const [rates, setRates] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
 
   const setBaseCurrency = (currency) => {
+    setIsLoading(true)
     return api(`/latest?base=${currency}`)
       .then((res) => {
         _setBaseCurrency(currency)
@@ -23,6 +25,9 @@ export const ConversionProvider = ({ children }) => {
       })
       .catch((error) => {
         Alert.alert('Sorry, something went wrong.', error.message)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
   }
 
@@ -40,6 +45,7 @@ export const ConversionProvider = ({ children }) => {
     quoteCurrency,
     date,
     rates,
+    isLoading,
     swapCurrencies,
     setBaseCurrency,
     setQuoteCurrency,
@@ -53,7 +59,7 @@ export const ConversionProvider = ({ children }) => {
 }
 
 export function useConversion() {
-  const { baseCurrency, quoteCurrency, date, rates } = useContext(
+  const { baseCurrency, quoteCurrency, date, rates, isLoading } = useContext(
     ConversionContext,
   )
 
@@ -62,6 +68,7 @@ export function useConversion() {
     quoteCurrency,
     date,
     rates,
+    isLoading,
   }
 }
 
